@@ -1,13 +1,13 @@
 package org.wirvsvirus.locoronando.dealer.model.db;
 
-import lombok.Data;
-
 import javax.persistence.Embeddable;
+
+import lombok.Data;
 
 @Data
 @Embeddable
 public class Address {
-  private String street;
-  private String houseNumber;
-  private int postalCode;
+	private String street;
+	private String houseNumber;
+	private String postalCode;
 }
