@@ -30,10 +30,6 @@ public class Message {
   @JsonProperty("productId")
   private long productId;
 
-  public Message() {
-
-  }
-
   public void setTimeStamp(long timeStamp) {
     this.timeStamp = timeStamp;
   }
@@ -57,6 +53,7 @@ public class Message {
       ", message='" + message + '\'' +
       ", customerId=" + customerId +
       ", dealerId=" + dealerId +
+      ", sentType=" + sentType +
       ", timeStamp=" + timeStamp +
       ", type=" + type +
       ", productId=" + productId +

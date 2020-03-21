@@ -5,7 +5,6 @@ import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.wirvsvirus.locoronando.request.entity.Message;
 import org.wirvsvirus.locoronando.request.entity.SentType;
@@ -16,9 +15,6 @@ public class MessageController {
 
   @Autowired
   private MessageRepository repository;
-
-  @Autowired
-  private SimpMessagingTemplate messagingTemplate;
 
   // TODO: Error handling
   // TODO: Security?
