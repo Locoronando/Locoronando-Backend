@@ -20,10 +20,13 @@ public class MessageController {
   private SimpMessagingTemplate messagingTemplate;
 
   // TODO: Error handling
+  // TODO: Security?
 
-  @MessageMapping("/send/customer/{customerId}")
-  @SendTo("/queue/dealer")
-  public Message handleCustomerRequest(@Payload Message message, @DestinationVariable long customerId) {
+  @MessageMapping("/send/customer/{customerId}/{dealerId}")
+  @SendTo("/queue/dealer/{dealerId}")
+  public Message handleCustomerRequest(@Payload Message message,
+                                       @DestinationVariable long customerId,
+                                       @DestinationVariable long dealerId) {
     message.setTimeStamp(System.currentTimeMillis());
 
     message = repository.save(message);
