@@ -14,7 +14,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
   @Override
   public void configureMessageBroker(MessageBrokerRegistry registry) {
-    registry.enableSimpleBroker("/queue/message");
+    registry.enableSimpleBroker("/queue/message/all", "/queue/message/chat", "/queue/message/new");
   }
 
   @Override

@@ -46,6 +46,14 @@ public class Message {
     this.sender = sender;
   }
 
+  public long getCustomerId() {
+    return customerId;
+  }
+
+  public long getDealerId() {
+    return dealerId;
+  }
+
   @Override
   public String toString() {
     return "Message{" +
