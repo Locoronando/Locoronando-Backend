@@ -102,12 +102,18 @@ public class MessageController {
   /**
    * Sends all messages from one chat the user is currently in
    *
-   * @param customerId The customer Id of the current chat
-   * @param dealerId   The dealer Id of the current chat
+   * @param Id the partner Id from the chat
    */
-  @MessageMapping("/receive/{customerId}/{dealerId}")
-  public void receiveAllMessages(@DestinationVariable long customerId, @DestinationVariable long dealerId, @Header("simpSessionId") String sessionId) {
-    this.sendAllMessagesFromChat(sessionId, repository.findAllByCustomerIdAndDealerId(customerId, dealerId));
+  @MessageMapping("/receive/{Id}")
+  public void receiveAllMessages(@DestinationVariable long Id, @Header("simpSessionId") String sessionId) {
+    User user = assignment.findUserBySession(sessionId).orElseThrow(NullPointerException::new);
+    boolean isCustomer = user.getParticipant() == Participant.CUSTOMER;
+
+    if(isCustomer) {
+      this.sendAllMessagesFromChat(sessionId, repository.findAllByCustomerIdAndDealerId(user.getId(), Id));
+      return;
+    }
+    this.sendAllMessagesFromChat(sessionId, repository.findAllByCustomerIdAndDealerId(Id, user.getId()));
   }
 
   @MessageMapping("/register")

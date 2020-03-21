@@ -19,7 +19,6 @@ public class Message {
   private long customerId;
   private long dealerId;
 
-  @JsonProperty("sender")
   private Participant sender;
 
   private long timeStamp;
