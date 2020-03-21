@@ -1,31 +1,26 @@
 package org.wirvsvirus.locoronando.location;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import java.util.Optional;
 
-@Service
-public class GeocodingService {
+import org.wirvsvirus.locoronando.dealer.Address;
 
-	@Value("${geocode.apikey}")
-	private String apikey;
-	@Value("${geocode.url}")
-	private String url;
-
-	@Autowired
-	private RestTemplate restTemplate;
+public interface GeocodingService {
 
 	/**
-	 * Gets geo coordinates from a description.
+	 * Gets geo coordinates from a zipcode.
 	 *
-	 * @param description Free text description of a place.
+	 * @param zipcode The 5 digit German zipcode. Must be String as ZIP codes can
+	 *                have leading 0 in Germany.
 	 * @return geo coordinates
 	 */
-	public Geocode getGeocodeFromDescription(String description) {
-		OpenCageDataResponse response = this.restTemplate.getForObject(this.url, OpenCageDataResponse.class,
-				this.apikey, description);
-		return response.getResults().get(0).getGeometry();
-	}
+	Optional<Geocode> getGeocode(String zipcode);
+
+	/**
+	 * Gets geo coordinates from an {@link Address}.
+	 *
+	 * @param address {@link Address} of the geocoordinates
+	 * @return geo coordinates
+	 */
+	Optional<Geocode> getGeocode(Address address);
 
 }
