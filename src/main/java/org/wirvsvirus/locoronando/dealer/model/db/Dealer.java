@@ -26,7 +26,7 @@ public class Dealer {
   private String category;
   private short radius;
   @OneToMany(
-    cascade = CascadeType.ALL, fetch = FetchType.EAGER
+    cascade = CascadeType.ALL, fetch = FetchType.LAZY
   )
   private List<Category> categories;
 
@@ -37,7 +37,9 @@ public class Dealer {
   @Embedded
   private Address address;
 
-  @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "dealer")
+  @OneToMany(mappedBy = "dealer", fetch = FetchType.LAZY)
   private List<Product> products;
+  
+  
 
 }
