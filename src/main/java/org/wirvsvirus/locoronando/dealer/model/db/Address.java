@@ -1,4 +1,4 @@
-package org.wirvsvirus.locoronando.dealer;
+package org.wirvsvirus.locoronando.dealer.model.db;
 
 import javax.persistence.Embeddable;
 
