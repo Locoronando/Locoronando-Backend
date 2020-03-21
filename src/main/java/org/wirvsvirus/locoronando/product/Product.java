@@ -1,22 +1,22 @@
 package org.wirvsvirus.locoronando.product;
 
+import java.util.UUID;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
 public class Product {
   @Id
-  @GeneratedValue
-  private int id;
+  private UUID uniqueId;
   private String title;
   private String price;
   private String description;
   private int handlerId;
+  private int categoryId;
   private long createdAt;
 
-  public int id() {
-    return id;
+  public UUID uniqueId() {
+    return uniqueId;
   }
 
   public String title() {
@@ -49,6 +49,14 @@ public class Product {
 
   public void setHandlerId(int handlerId) {
     this.handlerId = handlerId;
+  }
+
+  public int categoryId() {
+    return categoryId;
+  }
+
+  public void setCategoryId(int categoryId) {
+    this.categoryId = categoryId;
   }
 
   public long createdAt() {
