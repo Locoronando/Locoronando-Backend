@@ -63,7 +63,7 @@ public class MessageController {
     message.setSender(user.getParticipant());
 
     // Send message
-    User target =  new User(user.getParticipant() == Participant.CUSTOMER ? Participant.DEALER : Participant.CUSTOMER, targetId);
+    User target = new User(user.getParticipant() == Participant.CUSTOMER ? Participant.DEALER : Participant.CUSTOMER, targetId);
     Optional<String> sessionOptional = assignment.findSessionByUser(target);
 
     if (!sessionOptional.isPresent()) {
@@ -87,17 +87,16 @@ public class MessageController {
 
     assignment.assign(sessionId, user);
 
-    sendMessage(sessionId, new Message());
-
     logger.info("Assigned " + sessionId + " to " + user);
   }
 
   private void sendMessage(String sessionId, Message message) {
-    SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor.create(SimpMessageType.MESSAGE);
+    SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor
+      .create(SimpMessageType.MESSAGE);
     headerAccessor.setSessionId(sessionId);
     headerAccessor.setLeaveMutable(true);
 
-    messagingTemplate.convertAndSendToUser(headerAccessor.getUser().getName(),
-      "/queue/message", message, headerAccessor.getMessageHeaders());
+    messagingTemplate.convertAndSendToUser(sessionId, "/queue/message", message,
+      headerAccessor.getMessageHeaders());
   }
 }
