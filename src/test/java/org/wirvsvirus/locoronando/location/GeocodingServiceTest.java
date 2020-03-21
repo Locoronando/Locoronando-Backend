@@ -7,7 +7,7 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.wirvsvirus.locoronando.dealer.Address;
+import org.wirvsvirus.locoronando.dealer.model.db.Address;
 
 @SpringBootTest
 public class GeocodingServiceTest {
@@ -31,8 +31,10 @@ public class GeocodingServiceTest {
 	@Test
 	void testGetGeocodeFromAddress() {
 		// given
-		// TODO Willy-Brandt-Straße 1, 10557
 		Address address = new Address();
+		address.setStreet("Willy-Brandt-Straße");
+		address.setHouseNumber("1");
+		address.setPostalCode("10557");
 
 		// when
 		Optional<Geocode> geocode = this.geocodingService.findGeocode(address);

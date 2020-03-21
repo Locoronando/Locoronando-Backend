@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.wirvsvirus.locoronando.dealer.Address;
+import org.wirvsvirus.locoronando.dealer.model.db.Address;
 
 @Service
 public class GeocodingServiceImpl implements GeocodingService {
@@ -50,10 +50,7 @@ public class GeocodingServiceImpl implements GeocodingService {
 	}
 
 	private String formatAddress(Address address) {
-		// TODO to implement
-		// String.format(addressSearchString, address.getStreet(),
-		// address.getHouseNumber(),
-		// address.getPostCode());
+		String.format(this.addressSearchString, address.getStreet(), address.getHouseNumber(), address.getPostalCode());
 		return address.toString();
 	}
 

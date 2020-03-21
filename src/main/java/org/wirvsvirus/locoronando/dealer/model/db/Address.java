@@ -9,5 +9,5 @@ import lombok.Data;
 public class Address {
 	private String street;
 	private String houseNumber;
-	private int postalCode;
+	private String postalCode;
 }

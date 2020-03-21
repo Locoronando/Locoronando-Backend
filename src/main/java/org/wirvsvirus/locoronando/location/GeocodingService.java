@@ -2,7 +2,7 @@ package org.wirvsvirus.locoronando.location;
 
 import java.util.Optional;
 
-import org.wirvsvirus.locoronando.dealer.Address;
+import org.wirvsvirus.locoronando.dealer.model.db.Address;
 
 public interface GeocodingService {
 
