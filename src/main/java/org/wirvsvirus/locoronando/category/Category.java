@@ -1,19 +1,28 @@
 package org.wirvsvirus.locoronando.category;
 
+import java.util.List;
 import java.util.UUID;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import org.wirvsvirus.locoronando.product.Product;
 
 @Entity
 public class Category {
   @Id
-  private UUID uniqueId;
+  @GeneratedValue
+  private int id;
   private String name;
   private String description;
-  private int handlerId;
+  @OneToMany(
+    cascade = CascadeType.ALL
+  )
+  private List<Product> products;
 
-  public UUID uniqueId() {
-    return uniqueId;
+  public int id() {
+    return id;
   }
 
   public String name() {
@@ -32,11 +41,11 @@ public class Category {
     this.description = description;
   }
 
-  public int handlerId() {
-    return handlerId;
+  public List<Product> products() {
+    return products;
   }
 
-  public void setHandlerId(int handlerId) {
-    this.handlerId = handlerId;
+  public void setProducts(List<Product> products) {
+    this.products = products;
   }
 }
