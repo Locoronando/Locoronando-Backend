@@ -9,19 +9,22 @@ import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.util.GeometricShapeFactory;
 import org.springframework.stereotype.Service;
 import org.wirvsvirus.locoronando.dealer.model.db.Dealer;
+import org.wirvsvirus.locoronando.location.Geocode;
+import org.wirvsvirus.locoronando.location.GeocodingService;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class DealerService {
   private final DealerRepository dealerRepository;
+  private final GeocodingService geocodingService;
 
   public void create(Dealer dealer) {
-    // TODO: replace by call to location service with address data
-    double latitude = 48.78232d;
-    double longitude = 9.17702;
+    Geocode geocode = getGeocode(dealer.getAddress().getPostalCode());
+    dealer.setArea(calculateArea(geocode.getLat(), geocode.getLng(), dealer.getRadius()));
 
-    dealer.setArea(calculateArea(latitude, longitude, dealer.getRadius()));
     dealerRepository.save(dealer);
   }
 
@@ -29,15 +32,17 @@ public class DealerService {
     return dealerRepository.findAll();
   }
 
-  public Iterable<Dealer> findByLocation(String plz) {
-    // TODO: replace by call to location service with plz resolution?
-    double latitude = 48.78232d;
-    double longitude = 9.17702;
-
+  public Iterable<Dealer> findByLocation(String zip) {
+    Geocode geocode = getGeocode(zip);
     GeometryFactory gf = new GeometryFactory();
-    Point location = gf.createPoint(new Coordinate(latitude, longitude));
+    Point location = gf.createPoint(new Coordinate(geocode.getLat(), geocode.getLng()));
 
     return dealerRepository.findbyLocation(location);
+  }
+
+  private Geocode getGeocode(String plz) {
+    Optional<Geocode> geocodeOptional = geocodingService.findGeocode(plz);
+    return geocodeOptional.orElseThrow();
   }
 
   private Polygon calculateArea(double latitude, double longitude, short radiusInKm) {
@@ -56,6 +61,4 @@ public class DealerService {
     Polygon area = shapeFactory.createEllipse();
     return area;
   }
-
-
 }

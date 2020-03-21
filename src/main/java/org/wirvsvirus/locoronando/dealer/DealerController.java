@@ -3,6 +3,7 @@ package org.wirvsvirus.locoronando.dealer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.wirvsvirus.locoronando.dealer.model.ModelMapper;
 import org.wirvsvirus.locoronando.dealer.model.rest.DealerUpdate;
 
-import javax.websocket.server.PathParam;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.NO_CONTENT;
@@ -30,9 +30,14 @@ public class DealerController {
     dealerService.create(modelMapper.map(dealerUpdate));
   }
 
-  @GetMapping(path = "find/{PLZ}")
-  public List<DealerUpdate> find(@PathParam("PLZ") String plz) {
-    return modelMapper.map(dealerService.findByLocation(plz));
+  @GetMapping(path = "find/{zip}")
+  public List<DealerUpdate> find(@PathVariable("zip") String zip) {
+    return modelMapper.map(dealerService.findByLocation(zip));
+  }
+
+  @GetMapping(path = "find")
+  public List<DealerUpdate> findAll() {
+    return modelMapper.map(dealerService.findAll());
   }
 
 }
