@@ -1,4 +1,4 @@
-package org.wirvsvirus.coloronando.dealer;
+package org.wirvsvirus.locoronando.dealer;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
