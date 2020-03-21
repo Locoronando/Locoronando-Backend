@@ -1,10 +1,18 @@
 package org.wirvsvirus.locoronando.product;
 
+import lombok.Data;
+import org.hibernate.annotations.Fetch;
+import org.wirvsvirus.locoronando.dealer.model.db.Dealer;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
+@Data
 public class Product {
   @Id
   @GeneratedValue
@@ -14,36 +22,6 @@ public class Product {
   private String description;
   private long createdAt;
 
-  public int id() {
-    return id;
-  }
-
-  public String title() {
-    return title;
-  }
-
-  public void setTitle(String title) {
-    this.title = title;
-  }
-
-  public String price() {
-    return price;
-  }
-
-  public void setPrice(String price) {
-    this.price = price;
-  }
-
-  public String description() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-
-  public long createdAt() {
-    return createdAt;
-  }
+  @ManyToOne
+  private Dealer dealer;
 }

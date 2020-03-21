@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.wirvsvirus.locoronando.dealer.model.ModelMapper;
+import org.wirvsvirus.locoronando.dealer.model.db.Dealer;
 import org.wirvsvirus.locoronando.dealer.model.rest.DealerUpdate;
 
 import javax.websocket.server.PathParam;
@@ -31,8 +32,8 @@ public class DealerController {
   }
 
   @GetMapping(path = "find/{PLZ}")
-  public List<DealerUpdate> find(@PathParam("PLZ") String plz) {
-    return modelMapper.map(dealerService.findByLocation(plz));
+  public Iterable<Dealer> find(@PathParam("PLZ") String plz) {
+    return dealerService.findByLocation(plz);
   }
 
 }
