@@ -1,5 +1,13 @@
 package org.wirvsvirus.locoronando.dealer;
 
-public class Address {
+import javax.persistence.Embeddable;
 
+import lombok.Data;
+
+@Data
+@Embeddable
+public class Address {
+	private String street;
+	private String houseNumber;
+	private int postalCode;
 }
