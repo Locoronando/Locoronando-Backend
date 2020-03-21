@@ -1,10 +1,10 @@
-package org.wirvsvirus.coloronando;
+package org.wirvsvirus.locoronando;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ColoronandoApplicationTests {
+class LocoronandoApplicationTests {
 
 	@Test
 	void contextLoads() {
