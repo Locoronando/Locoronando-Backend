@@ -11,7 +11,10 @@ import org.wirvsvirus.locoronando.dealer.Address;
 @Service
 public class GeocodingServiceImpl implements GeocodingService {
 
-	private static final String ZIPCODE_SEARCH_STRING = "%s Germany";
+	@Value("${geocode.zipcodesearch}")
+	private String zipcodeSearchString;
+	@Value("${geocode.addresssearch}")
+	private String addressSearchString;
 	@Value("${geocode.apikey}")
 	private String apikey;
 	@Value("${geocode.url}")
@@ -36,19 +39,19 @@ public class GeocodingServiceImpl implements GeocodingService {
 	}
 
 	@Override
-	public Optional<Geocode> getGeocode(String zipcode) {
-		return this.getGeocodeFromDescription(String.format(ZIPCODE_SEARCH_STRING, zipcode));
+	public Optional<Geocode> findGeocode(String zipcode) {
+		return this.getGeocodeFromDescription(String.format(this.zipcodeSearchString, zipcode));
 	}
 
 	@Override
-	public Optional<Geocode> getGeocode(Address address) {
+	public Optional<Geocode> findGeocode(Address address) {
 		String formattedAddress = this.formatAddress(address);
 		return this.getGeocodeFromDescription(formattedAddress);
 	}
 
 	private String formatAddress(Address address) {
 		// TODO to implement
-		// String.format("%s %s, %s, Germany", address.getStreet(),
+		// String.format(addressSearchString, address.getStreet(),
 		// address.getHouseNumber(),
 		// address.getPostCode());
 		return address.toString();

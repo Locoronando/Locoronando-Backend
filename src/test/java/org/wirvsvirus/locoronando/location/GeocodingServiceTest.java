@@ -21,7 +21,7 @@ public class GeocodingServiceTest {
 		String zipcode = "74348";
 
 		// when
-		Optional<Geocode> geocode = this.geocodingService.getGeocode(zipcode);
+		Optional<Geocode> geocode = this.geocodingService.findGeocode(zipcode);
 
 		// then
 		assertThat(geocode.get().getLat()).isEqualTo(49.0769491);
@@ -35,7 +35,7 @@ public class GeocodingServiceTest {
 		Address address = new Address();
 
 		// when
-		Optional<Geocode> geocode = this.geocodingService.getGeocode(address);
+		Optional<Geocode> geocode = this.geocodingService.findGeocode(address);
 
 		// then
 		assertThat(geocode.get().getLat()).isEqualTo(52.5200453);

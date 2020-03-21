@@ -7,20 +7,20 @@ import org.wirvsvirus.locoronando.dealer.Address;
 public interface GeocodingService {
 
 	/**
-	 * Gets geo coordinates from a zipcode.
+	 * Searches for geo coordinates from a zipcode.
 	 *
 	 * @param zipcode The 5 digit German zipcode. Must be String as ZIP codes can
 	 *                have leading 0 in Germany.
-	 * @return geo coordinates
+	 * @return geo coordinates if found
 	 */
-	Optional<Geocode> getGeocode(String zipcode);
+	Optional<Geocode> findGeocode(String zipcode);
 
 	/**
-	 * Gets geo coordinates from an {@link Address}.
+	 * Searches for geo coordinates from an {@link Address}.
 	 *
 	 * @param address {@link Address} of the geocoordinates
-	 * @return geo coordinates
+	 * @return geo coordinates if found
 	 */
-	Optional<Geocode> getGeocode(Address address);
+	Optional<Geocode> findGeocode(Address address);
 
 }
