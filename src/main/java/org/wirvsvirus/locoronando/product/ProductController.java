@@ -30,8 +30,8 @@ public final class ProductController {
     return productRepository.findAll();
   }
 
-  @GetMapping(path = "find/{brandId}")
-  public Iterable<Product> findAll(@PathVariable("brandId") int brandId) {
-    return productRepository.findAllByBrandId(brandId);
+  @GetMapping(path = "find/{handlerId}")
+  public Iterable<Product> findAll(@PathVariable("handlerId") int handlerId) {
+    return productRepository.findAllByHandlerId(handlerId);
   }
 }
