@@ -1,4 +1,4 @@
-package org.wirvsvirus.locoronando.request.entity;
+package org.wirvsvirus.locoronando.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

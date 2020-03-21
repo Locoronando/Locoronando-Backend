@@ -1,4 +1,4 @@
-package org.wirvsvirus.locoronando.request.entity;
+package org.wirvsvirus.locoronando.request;
 
 public enum RequestType {
 

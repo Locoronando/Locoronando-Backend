@@ -1,4 +1,4 @@
-package org.wirvsvirus.locoronando.request.config;
+package org.wirvsvirus.locoronando.request;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
