@@ -53,6 +53,30 @@ public class Message {
     return dealerId;
   }
 
+  public long getId() {
+    return id;
+  }
+
+  public String getMessage() {
+    return message;
+  }
+
+  public Participant getSender() {
+    return sender;
+  }
+
+  public long getTimeStamp() {
+    return timeStamp;
+  }
+
+  public RequestType getType() {
+    return type;
+  }
+
+  public long getProductId() {
+    return productId;
+  }
+
   @Override
   public String toString() {
     return "Message{" +
