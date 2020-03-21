@@ -31,8 +31,21 @@ public class MessageController {
 
     message = repository.save(message);
 
-    System.out.println("Saved message: " + message);
-    System.out.println("Customer id: " + customerId);
+    System.out.println("Sent message as customer: " + message);
+
+    return message;
+  }
+
+  @MessageMapping("/send/dealer/{dealerId}/{customerId}")
+  @SendTo("/queue/customer/{customerId}")
+  public Message handleDealerRequest(@Payload Message message,
+                                       @DestinationVariable long customerId,
+                                       @DestinationVariable long dealerId) {
+    message.setTimeStamp(System.currentTimeMillis());
+
+    message = repository.save(message);
+
+    System.out.println("Sent message as dealer: " + message);
 
     return message;
   }
