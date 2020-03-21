@@ -8,6 +8,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.wirvsvirus.locoronando.request.entity.Message;
+import org.wirvsvirus.locoronando.request.entity.SentType;
 import org.wirvsvirus.locoronando.request.repository.MessageRepository;
 
 @Controller
@@ -28,25 +29,23 @@ public class MessageController {
                                        @DestinationVariable long customerId,
                                        @DestinationVariable long dealerId) {
     message.setTimeStamp(System.currentTimeMillis());
+    message.setCustomerId(customerId);
+    message.setDealerId(dealerId);
+    message.setSentType(SentType.CUSTOMER);
 
-    message = repository.save(message);
-
-    System.out.println("Sent message as customer: " + message);
-
-    return message;
+    return repository.save(message);
   }
 
   @MessageMapping("/send/dealer/{dealerId}/{customerId}")
   @SendTo("/queue/customer/{customerId}")
   public Message handleDealerRequest(@Payload Message message,
-                                       @DestinationVariable long customerId,
-                                       @DestinationVariable long dealerId) {
+                                     @DestinationVariable long customerId,
+                                     @DestinationVariable long dealerId) {
     message.setTimeStamp(System.currentTimeMillis());
+    message.setCustomerId(customerId);
+    message.setDealerId(dealerId);
+    message.setSentType(SentType.DEALER);
 
-    message = repository.save(message);
-
-    System.out.println("Sent message as dealer: " + message);
-
-    return message;
+    return repository.save(message);
   }
 }

@@ -1,19 +1,11 @@
 package org.wirvsvirus.locoronando.request.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonRawValue;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.time.LocalDate;
-import java.util.Optional;
 
-/**
- * Class description.
- *
- * @author Paul2708
- */
 @Entity
 public class Message {
 
@@ -21,16 +13,14 @@ public class Message {
   @GeneratedValue
   private long id;
 
-  // TODO: Use class annotation for json
-
   @JsonProperty("message")
   private String message;
 
-  @JsonProperty("customerId")
   private long customerId;
-
-  @JsonProperty("dealerId")
   private long dealerId;
+
+  @JsonProperty("sentFrom")
+  private SentType sentType;
 
   private long timeStamp;
 
@@ -46,6 +36,18 @@ public class Message {
 
   public void setTimeStamp(long timeStamp) {
     this.timeStamp = timeStamp;
+  }
+
+  public void setCustomerId(long customerId) {
+    this.customerId = customerId;
+  }
+
+  public void setDealerId(long dealerId) {
+    this.dealerId = dealerId;
+  }
+
+  public void setSentType(SentType sentType) {
+    this.sentType = sentType;
   }
 
   @Override
