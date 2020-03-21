@@ -27,7 +27,7 @@ public final class CategoryController {
     this.categoryService = categoryService;
   }
 
-  @PostMapping(path = "add")
+  @PostMapping
   @ResponseStatus(HttpStatus.OK)
   public void addCategory(@RequestBody Category category) {
     categoryRepository.save(category);

@@ -27,7 +27,7 @@ public final class ProductController {
     this.productService = productService;
   }
 
-  @PostMapping(path = "add")
+  @PostMapping
   @ResponseStatus(HttpStatus.OK)
   public void addProduct(Product product) {
     productRepository.save(product);
