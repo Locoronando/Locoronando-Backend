@@ -21,10 +21,11 @@ public class MessageController {
   public Message handleCustomerRequest(@Payload Message message,
                                        @DestinationVariable long customerId,
                                        @DestinationVariable long dealerId) {
+    // TODO: Verify ids
     message.setTimeStamp(System.currentTimeMillis());
     message.setCustomerId(customerId);
     message.setDealerId(dealerId);
-    message.setSentType(SentType.CUSTOMER);
+    message.setSender(Participant.CUSTOMER);
 
     return repository.save(message);
   }
@@ -34,10 +35,11 @@ public class MessageController {
   public Message handleDealerRequest(@Payload Message message,
                                      @DestinationVariable long customerId,
                                      @DestinationVariable long dealerId) {
+    // TODO: Verify ids
     message.setTimeStamp(System.currentTimeMillis());
     message.setCustomerId(customerId);
     message.setDealerId(dealerId);
-    message.setSentType(SentType.DEALER);
+    message.setSender(Participant.DEALER);
 
     return repository.save(message);
   }

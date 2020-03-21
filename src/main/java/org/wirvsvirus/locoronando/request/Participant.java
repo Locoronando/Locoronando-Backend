@@ -1,6 +1,6 @@
 package org.wirvsvirus.locoronando.request;
 
-public enum SentType {
+public enum Participant {
 
   CUSTOMER,
   DEALER

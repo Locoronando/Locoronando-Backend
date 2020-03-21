@@ -19,8 +19,8 @@ public class Message {
   private long customerId;
   private long dealerId;
 
-  @JsonProperty("sentFrom")
-  private SentType sentType;
+  @JsonProperty("sender")
+  private Participant sender;
 
   private long timeStamp;
 
@@ -42,8 +42,8 @@ public class Message {
     this.dealerId = dealerId;
   }
 
-  public void setSentType(SentType sentType) {
-    this.sentType = sentType;
+  public void setSender(Participant sender) {
+    this.sender = sender;
   }
 
   @Override
@@ -53,7 +53,7 @@ public class Message {
       ", message='" + message + '\'' +
       ", customerId=" + customerId +
       ", dealerId=" + dealerId +
-      ", sentType=" + sentType +
+      ", sender=" + sender +
       ", timeStamp=" + timeStamp +
       ", type=" + type +
       ", productId=" + productId +
