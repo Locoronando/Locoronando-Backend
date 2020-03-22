@@ -3,5 +3,9 @@ package org.wirvsvirus.locoronando.order;
 public enum OrderStatus {
 
   OPEN,
-  CLOSED
+  ACCEPTED,
+  IN_PROCESS,
+  DELIVERY,
+  DONE,
+  ARCHIVED;
 }
