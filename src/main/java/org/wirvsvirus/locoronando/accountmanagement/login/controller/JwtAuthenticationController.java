@@ -11,10 +11,11 @@ import org.wirvsvirus.locoronando.accountmanagement.db.UserRepository;
 import org.wirvsvirus.locoronando.accountmanagement.login.model.TokenRequest;
 import org.wirvsvirus.locoronando.accountmanagement.model.User;
 import org.wirvsvirus.locoronando.customer.CustomerRepository;
+import org.wirvsvirus.locoronando.customer.model.Customer;
+import org.wirvsvirus.locoronando.dealer.Dealer;
 import org.wirvsvirus.locoronando.dealer.DealerRepository;
 import org.wirvsvirus.locoronando.request.Participant;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
 @RestController
@@ -22,15 +23,28 @@ import java.util.Date;
 public class JwtAuthenticationController {
 
   @Autowired
-  private UserRepository userRepository;
+  private DealerRepository dealerRepository;
 
-  @PostMapping("/register")
-  public ResponseEntity createUser(@RequestBody User request) {
-    User userPerUsername = userRepository.findByUsername(request.getUsername());
-    User userPerEmail = userRepository.findByEmail(request.getEmail());
+  @Autowired
+  private CustomerRepository customerRepository;
+
+  /**
+   * This method implements the path of registering a dealer in the system. It will give back
+   * the Authentication Header if the registering was successful
+   *
+   * @param request The Dealer given by the frontend
+   * @return the Response Entity including the Authentication Header
+   */
+  @PostMapping("/register/dealer")
+  public ResponseEntity createDealer(@RequestBody Dealer request) {
+    Dealer userPerUsername = dealerRepository.findByOwnerName(request.getOwnerName());
+    Dealer userPerEmail = dealerRepository.findByEmail(request.getEmail());
+
+    if(dealerRepository.existsDealerByShopName(request.getShopName()))
+      return new ResponseEntity("This shop name already exists!", HttpStatus.CONFLICT);
 
     if (userPerEmail == null && userPerUsername == null) {
-      userRepository.save(request);
+      dealerRepository.save(request);
     } else if (userPerEmail == null) {
       return new ResponseEntity("This username already exists!", HttpStatus.CONFLICT);
     } else if (userPerUsername == null) {
@@ -39,35 +53,99 @@ public class JwtAuthenticationController {
       return new ResponseEntity("This username already exists!", HttpStatus.CONFLICT);
     }
 
-    return this.getAuthorizationResponse(request);
+    return this.getAuthorizationResponseForDealer(request);
+  }
+
+  /**
+   * This method implements the path of registering a customer in the system. It will give back
+   * the Authentication Header if the registering was successful
+   *
+   * @param request The Customer given by the frontend
+   * @return the Response Entity including the Authentication Header
+   */
+  @PostMapping("/register/customer")
+  public ResponseEntity createCustomer(@RequestBody Customer request) {
+    Customer userPerUsername = customerRepository.findByName(request.getName());
+    Customer userPerEmail = customerRepository.findByEmail(request.getEmail());
+
+    if (userPerEmail == null && userPerUsername == null) {
+      customerRepository.save(request);
+    } else if (userPerEmail == null) {
+      return new ResponseEntity("This username already exists!", HttpStatus.CONFLICT);
+    } else if (userPerUsername == null) {
+      return new ResponseEntity("This email is already taken!", HttpStatus.CONFLICT);
+    } else {
+      return new ResponseEntity("This username already exists!", HttpStatus.CONFLICT);
+    }
+
+    return this.getAuthorizationResponseForCustomer(request);
   }
 
   @GetMapping("/login")
-  public ResponseEntity<User> login(@RequestBody TokenRequest request) {
-    User user = userRepository.findByUsername(request.getUsername());
-
-    if (user == null)
-      return new ResponseEntity("Invalid credentials! Please enter the correct username and password", HttpStatus.CONFLICT);
-
-    if(!request.getPassword().equals(user.getPassword()))
-      return new ResponseEntity("Invalid credentials! Please enter the correct username and password", HttpStatus.CONFLICT);
-
-    return this.getAuthorizationResponse(user);
+  public ResponseEntity login(@RequestBody TokenRequest request) {
+    if(request.getType().equals(Participant.DEALER)) return loginDealer(request);
+    return loginCustomer(request);
   }
 
-  private ResponseEntity<User> getAuthorizationResponse(User request) {
+  private ResponseEntity loginDealer(TokenRequest request) {
+    Dealer dealer = dealerRepository.findByOwnerName(request.getUsername());
+    if (dealer == null)
+      return new ResponseEntity("Invalid credentials! Please enter the correct username and password", HttpStatus.CONFLICT);
+
+    if(!request.getPassword().equals(dealer.getPassword()))
+      return new ResponseEntity("Invalid credentials! Please enter the correct username and password", HttpStatus.CONFLICT);
+
+    return this.getAuthorizationResponseForDealer(dealer);
+  }
+
+  private ResponseEntity loginCustomer(TokenRequest request) {
+    Customer customer = customerRepository.findByName(request.getUsername());
+    if (customer == null)
+      return new ResponseEntity("Invalid credentials! Please enter the correct username and password", HttpStatus.CONFLICT);
+
+    if(!request.getPassword().equals(customer.getPassword()))
+      return new ResponseEntity("Invalid credentials! Please enter the correct username and password", HttpStatus.CONFLICT);
+
+    return this.getAuthorizationResponseForCustomer(customer);
+  }
+
+  private ResponseEntity<User> getAuthorizationResponseForCustomer(Customer request) {
     HttpHeaders headers = new HttpHeaders();
-    headers.add("Authorization", generateTokenFromUser(request));
+    headers.add("Authorization", generateTokenFromCustomer(request));
     return new ResponseEntity("Successfully logged in", headers, HttpStatus.CREATED);
   }
 
-  private String generateTokenFromUser(User user) {
+  private ResponseEntity<User> getAuthorizationResponseForDealer(Dealer request) {
+    HttpHeaders headers = new HttpHeaders();
+    headers.add("Authorization", generateTokenFromDealer(request));
+    return new ResponseEntity("Successfully logged in", headers, HttpStatus.CREATED);
+  }
+
+  private String generateTokenFromCustomer(Customer customer) {
     try {
       return Jwts.builder()
         .setExpiration(new Date(1300819380))
-        .claim("username", user.getUsername())
-        .claim("email", user.getEmail())
-        .claim("id", user.getId())
+        .claim("username", customer.getName())
+        .claim("email", customer.getEmail())
+        .claim("id", customer.getId())
+        .signWith(
+          SignatureAlgorithm.HS256,
+          "secret".getBytes("UTF-8")
+        )
+        .compact();
+    } catch (Exception ignored) {
+      return "";
+    }
+  }
+
+  private String generateTokenFromDealer(Dealer dealer) {
+    try {
+      return Jwts.builder()
+        .setExpiration(new Date(1300819380))
+        .claim("shopName", dealer.getShopName())
+        .claim("username", dealer.getOwnerName())
+        .claim("email", dealer.getEmail())
+        .claim("id", dealer.id())
         .signWith(
           SignatureAlgorithm.HS256,
           "secret".getBytes("UTF-8")

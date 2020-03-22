@@ -2,6 +2,7 @@ package org.wirvsvirus.locoronando.customer;
 
 import org.springframework.data.repository.CrudRepository;
 import org.wirvsvirus.locoronando.customer.model.Customer;
+import org.wirvsvirus.locoronando.dealer.Dealer;
 
 public interface CustomerRepository extends CrudRepository<Customer, Long> {
 
@@ -13,4 +14,6 @@ public interface CustomerRepository extends CrudRepository<Customer, Long> {
    * @return the Customer Object with this email
    */
   Customer findByEmail(String email);
+
+  Customer findByName(String name);
 }

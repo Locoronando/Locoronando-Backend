@@ -13,8 +13,12 @@ public class Dealer {
   @Id
   @GeneratedValue
   private int id;
-  private int userId;
-  private String name;
+
+  private String ownerName;
+  private String shopName;
+  private String email;
+  private String password;
+
   @Embedded
   private Address address;
 
@@ -22,24 +26,44 @@ public class Dealer {
     return id;
   }
 
-  public String name() {
-    return name;
+  public String ownerName() {
+    return ownerName;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setOwnerName(String ownerName) {
+    this.ownerName = ownerName;
+  }
+
+  public String getShopName() {
+    return shopName;
+  }
+
+  public void setShopName(String shopName) {
+    this.shopName = shopName;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public String getOwnerName() {
+    return ownerName;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
   }
 
   public Address address() {
     return address;
-  }
-
-  public int getUserId() {
-    return userId;
-  }
-
-  public void setUserId(int userId) {
-    this.userId = userId;
   }
 
   public void setAddress(Address address) {
