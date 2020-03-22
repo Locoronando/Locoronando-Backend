@@ -1,5 +1,6 @@
-package org.wirvsvirus.locoronando.category;
+package org.wirvsvirus.locoronando.dealer;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -7,13 +8,13 @@ import lombok.Data;
 
 @Data
 @Entity
-public class Category {
+public class Dealer {
   @Id
   @GeneratedValue
   private int id;
   private String name;
-  private String description;
-  private int dealerId;
+  @Embedded
+  private Address address;
 
   public int id() {
     return id;
@@ -27,15 +28,12 @@ public class Category {
     this.name = name;
   }
 
-  public String description() {
-    return description;
+  public Address address() {
+    return address;
   }
 
-  public void setDescription(String description) {
-    this.description = description;
+  public void setAddress(Address address) {
+    this.address = address;
   }
 
-  public int dealerId() {
-    return dealerId;
-  }
 }
