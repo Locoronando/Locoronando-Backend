@@ -39,7 +39,6 @@ public final class ProductController {
     );
   }
 
-
   @GetMapping(path = "findAll")
   public Iterable<Product> findAll() {
     return productRepository.findAll();

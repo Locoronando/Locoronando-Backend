@@ -26,14 +26,18 @@ public final class CategoryController {
 
   @DeleteMapping(path = "deleteAll")
   public void deleteCategories(@PathParam("dealerId") int dealerId) {
-    categoryRepository.deleteCategoriesByDealerId(dealerId);
+    categoryRepository.findCategoriesByDealerId(dealerId)
+      .forEach(categoryRepository::delete);
   }
 
   @DeleteMapping(path = "delete")
   public void deleteCategory(
     @PathParam("categoryId") int categoryId,
     @PathParam("dealerId") int dealerId) {
-    categoryRepository.deleteCategoryByIdAndDealerId(categoryId, dealerId);
+    Category category = categoryRepository.findCategoryByIdAndDealerId(categoryId, dealerId);
+    if (category != null) {
+      categoryRepository.delete(category);
+    }
   }
 
   @GetMapping(path = "find")
