@@ -4,6 +4,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
 import lombok.Data;
 
 @Data
@@ -12,7 +13,12 @@ public class Dealer {
   @Id
   @GeneratedValue
   private int id;
-  private String name;
+
+  private String ownerName;
+  private String shopName;
+  private String email;
+  private String password;
+
   @Embedded
   private Address address;
 
@@ -20,12 +26,40 @@ public class Dealer {
     return id;
   }
 
-  public String name() {
-    return name;
+  public String ownerName() {
+    return ownerName;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setOwnerName(String ownerName) {
+    this.ownerName = ownerName;
+  }
+
+  public String getShopName() {
+    return shopName;
+  }
+
+  public void setShopName(String shopName) {
+    this.shopName = shopName;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public String getOwnerName() {
+    return ownerName;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
   }
 
   public Address address() {

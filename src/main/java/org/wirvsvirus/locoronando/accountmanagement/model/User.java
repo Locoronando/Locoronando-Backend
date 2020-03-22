@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.wirvsvirus.locoronando.customer.Role;
-import org.wirvsvirus.locoronando.dealer.model.db.Address;
+import org.wirvsvirus.locoronando.dealer.Address;
 import org.wirvsvirus.locoronando.request.Participant;
 
 import javax.persistence.*;
@@ -17,7 +17,7 @@ public class User {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long id;
+  private int id;
 
   @JsonProperty("username")
   private String username;
@@ -36,10 +36,9 @@ public class User {
   private Set<Role> roles;
 
   @Embedded
-  @JsonIgnore
   private Address address;
 
-  public long getId() {
+  public int getId() {
     return id;
   }
 
@@ -67,7 +66,7 @@ public class User {
     return address;
   }
 
-  public void setId(long id) {
+  public void setId(int id) {
     this.id = id;
   }
 
