@@ -2,6 +2,7 @@ package org.wirvsvirus.locoronando.dealer.model.db;
 
 import lombok.Data;
 import org.locationtech.jts.geom.Geometry;
+import org.wirvsvirus.locoronando.customer.model.Customer;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
