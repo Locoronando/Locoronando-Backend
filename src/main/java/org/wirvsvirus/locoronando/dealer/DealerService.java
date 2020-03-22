@@ -22,8 +22,8 @@ public class DealerService {
   private final GeocodingService geocodingService;
 
   public void create(Dealer dealer) {
-    Geocode geocode = getGeocode(dealer.getAddress().getPostalCode());
-    dealer.setArea(calculateArea(geocode.getLat(), geocode.getLng(), dealer.getRadius()));
+    //Geocode geocode = getGeocode(dealer.getAddress().getPostalCode());
+    //dealer.setArea(calculateArea(geocode.getLat(), geocode.getLng(), dealer.getRadius()));
 
     dealerRepository.save(dealer);
   }

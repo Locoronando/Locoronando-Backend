@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @Embeddable
 public class Address {
-	private String street;
-	private String houseNumber;
-	private String postalCode;
+  private String street;
+  private String houseNumber;
+  private String postalCode;
 }
