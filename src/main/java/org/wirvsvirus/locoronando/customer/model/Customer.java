@@ -2,10 +2,10 @@ package org.wirvsvirus.locoronando.customer.model;
 
 import lombok.Data;
 import org.wirvsvirus.locoronando.customer.Role;
-import org.wirvsvirus.locoronando.dealer.model.db.Address;
 
 import javax.persistence.*;
 import java.util.Set;
+import org.wirvsvirus.locoronando.dealer.Address;
 
 @Entity
 @Data
