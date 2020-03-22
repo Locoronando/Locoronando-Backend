@@ -1,11 +1,6 @@
 package org.wirvsvirus.locoronando.order;
 
-/**
- * Class description.
- *
- * @author Paul2708
- */
-public class OrderStatusHolder {
+public final class OrderStatusHolder {
 
   private OrderStatus status;
 
