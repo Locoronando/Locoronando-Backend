@@ -1,44 +1,43 @@
 package org.wirvsvirus.locoronando.dealer;
 
-import static org.springframework.http.HttpStatus.NO_CONTENT;
-
-import java.util.List;
-
+import java.util.Optional;
+import javax.websocket.server.PathParam;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.wirvsvirus.locoronando.dealer.model.ModelMapper;
-import org.wirvsvirus.locoronando.dealer.model.rest.DealerUpdate;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping("dealer")
-@RequiredArgsConstructor
-@Slf4j
-public class DealerController {
-	private final DealerService dealerService;
-	private final ModelMapper modelMapper;
+@RequestMapping("api/v1/dealer")
+public final class DealerController {
+  private final DealerRepository dealerRepository;
 
-	@PostMapping
-	@ResponseStatus(NO_CONTENT)
-	public void create(@RequestBody DealerUpdate dealerUpdate) {
-		this.dealerService.create(this.modelMapper.map(dealerUpdate));
-	}
+  @Autowired
+  private DealerController(DealerRepository dealerRepository) {
+    this.dealerRepository = dealerRepository;
+  }
 
-	@GetMapping(path = "find/{zip}")
-	public List<DealerUpdate> find(@PathVariable("zip") String zip) {
-		return this.modelMapper.map(this.dealerService.findByLocation(zip));
-	}
+  @PostMapping
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void addDealer(@RequestBody Dealer dealer) {
+    dealerRepository.save(dealer);
+  }
 
-	@GetMapping(path = "find")
-	public List<DealerUpdate> findAll() {
-		return this.modelMapper.map(this.dealerService.findAll());
-	}
+  @GetMapping("find")
+  public Dealer findDealerById(@PathParam("id") int id) {
+    Optional<Dealer> optionalDealer = dealerRepository.findById(id);
+    if (optionalDealer.isEmpty()) {
+      return new Dealer();
+    }
+    return optionalDealer.get();
+  }
 
+  @GetMapping("findAll")
+  public Iterable<Dealer> findAll() {
+    return dealerRepository.findAll();
+  }
 }

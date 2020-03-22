@@ -45,13 +45,11 @@ public final class CategoryController {
 
   @GetMapping(path = "findAllByDealer")
   public Iterable<Category> findAll(@PathParam("dealerId") int dealerId) {
-    System.out.println("loll");
     return categoryRepository.findCategoriesByDealerId(dealerId);
   }
 
   @GetMapping(path = "findAll")
   public Iterable<Category> findAll() {
-    System.out.println("lol");
     return categoryRepository.findAll();
   }
 }
