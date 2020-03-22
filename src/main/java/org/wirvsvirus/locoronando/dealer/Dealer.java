@@ -4,6 +4,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
 import lombok.Data;
 
 @Data
@@ -12,6 +13,7 @@ public class Dealer {
   @Id
   @GeneratedValue
   private int id;
+  private int userId;
   private String name;
   @Embedded
   private Address address;
@@ -30,6 +32,14 @@ public class Dealer {
 
   public Address address() {
     return address;
+  }
+
+  public int getUserId() {
+    return userId;
+  }
+
+  public void setUserId(int userId) {
+    this.userId = userId;
   }
 
   public void setAddress(Address address) {

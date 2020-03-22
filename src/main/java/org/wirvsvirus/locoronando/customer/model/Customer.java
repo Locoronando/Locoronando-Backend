@@ -14,7 +14,7 @@ public class Customer {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
-
+  private int userId;
   private String name;
   private String email;
   private String password;
@@ -37,8 +37,16 @@ public class Customer {
     return roles;
   }
 
+  public int getUserId() {
+    return userId;
+  }
+
   public void setRoles(Set<Role> roles) {
     this.roles = roles;
+  }
+
+  public void setUserId(int userId) {
+    this.userId = userId;
   }
 
   //TODO maybe preferred payment method?
